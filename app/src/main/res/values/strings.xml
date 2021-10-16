@@ -52,4 +52,16 @@
     <string name="pref_last_notification">last_notification</string>
 
 
+    <!-- Used to open Settings Menu from MainActivity and DetailActivity -->
+    <string name="action_settings">Settings</string>
+
+    <!--Used in overflow menu to refresh weather data-->
+    <string name="action_refresh">Refresh</string>
+
+    <!-- Title of the DetailActivity -->
+    <string name="title_activity_detail">Details</string>
+    <!-- Title of the SettingsActivity -->
+    <string name="title_activity_settings">Settings</string>
+
+
 </resources>

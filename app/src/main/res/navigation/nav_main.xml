@@ -1,5 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/nav_main">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/forecastMainFragment">
 
+    <fragment
+        android:id="@+id/forecastMainFragment"
+        android:name="com.awesome.weatherapp.fragments.ForecastMainFragment"
+        android:label="Weather Forecast"
+        tools:layout="@layout/fragment_main_forecast">
+        <action
+            android:id="@+id/action_forecastMainFragment_to_forecastDetailsFragment"
+            app:destination="@id/forecastDetailsFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popExitAnim="@anim/slide_out" />
+        <action
+            android:id="@+id/action_forecastMainFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popExitAnim="@anim/slide_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/forecastDetailsFragment"
+        android:name="com.awesome.weatherapp.fragments.ForecastDetailsFragment"
+        android:label="Forecast Details"
+        tools:layout="@layout/fragment_detail_forecast" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.awesome.weatherapp.fragments.SettingsFragment"
+        android:label="Settings" />
 </navigation>
