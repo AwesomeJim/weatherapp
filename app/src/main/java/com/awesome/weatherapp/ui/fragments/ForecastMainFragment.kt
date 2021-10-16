@@ -1,4 +1,4 @@
-package com.awesome.weatherapp.fragments
+package com.awesome.weatherapp.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,24 +8,24 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.awesome.weatherapp.R
 
-class ForecastDetailsFragment : Fragment() {
+class ForecastMainFragment : Fragment() {
 
     companion object {
-        fun newInstance() = ForecastDetailsFragment()
+        fun newInstance() = ForecastMainFragment()
     }
 
-    private lateinit var viewModel: ForecastDetailsViewModel
+    private lateinit var viewModel: ForecastMainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_detail_forecast, container, false)
+        return inflater.inflate(R.layout.fragment_main_forecast, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ForecastDetailsViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ForecastMainViewModel::class.java)
         // TODO: Use the ViewModel
     }
 

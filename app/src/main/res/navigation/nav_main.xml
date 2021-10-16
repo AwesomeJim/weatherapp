@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/forecastMainFragment"
-        android:name="com.awesome.weatherapp.fragments.ForecastMainFragment"
+        android:name="com.awesome.weatherapp.ui.fragments.ForecastMainFragment"
         android:label="Weather Forecast"
         tools:layout="@layout/fragment_main_forecast">
         <action
@@ -25,11 +25,11 @@
     </fragment>
     <fragment
         android:id="@+id/forecastDetailsFragment"
-        android:name="com.awesome.weatherapp.fragments.ForecastDetailsFragment"
+        android:name="com.awesome.weatherapp.ui.fragments.ForecastDetailsFragment"
         android:label="Forecast Details"
         tools:layout="@layout/fragment_detail_forecast" />
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.awesome.weatherapp.fragments.SettingsFragment"
+        android:name="com.awesome.weatherapp.ui.fragments.SettingsFragment"
         android:label="Settings" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.awesome.weatherapp.fragments
+package com.awesome.weatherapp.ui.fragments
 
 import android.app.Activity
 import android.content.SharedPreferences

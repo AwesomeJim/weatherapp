@@ -1,4 +1,4 @@
-package com.awesome.weatherapp.fragments
+package com.awesome.weatherapp.ui.fragments
 
 import androidx.lifecycle.ViewModel
 
