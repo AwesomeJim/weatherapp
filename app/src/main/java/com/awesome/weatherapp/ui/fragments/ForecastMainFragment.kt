@@ -5,28 +5,48 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.awesome.weatherapp.R
+import androidx.fragment.app.viewModels
+import com.awesome.weatherapp.BuildConfig
+import com.awesome.weatherapp.databinding.FragmentMainForecastBinding
+import com.awesome.weatherapp.network.Status
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ForecastMainFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = ForecastMainFragment()
-    }
+    internal var view: View? = null
+    private var _binding: FragmentMainForecastBinding? = null
+    private val binding get() = _binding!!
 
-    private lateinit var viewModel: ForecastMainViewModel
+    private val viewModel: ForecastMainViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_main_forecast, container, false)
+        _binding = FragmentMainForecastBinding.inflate(inflater, container, false)
+        view = binding.root
+        return view
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ForecastMainViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val url = "${BuildConfig.OPEN_WEATHER_APP_ID}&units=metric&lat=-1.28337&lon=36.8167"
+        viewModel.loadWeatherData(url)
+        viewModel.apiWeatherDataResponse.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Status.SUCCESS -> {
+
+                }
+                Status.LOADING -> {
+
+                }
+                Status.ERROR -> {
+
+                }
+            }
+        }
+
     }
 
 }
