@@ -28,4 +28,6 @@
     <dimen name="list_item_date_left_margin">16dp</dimen>
     <dimen name="list_item_date_start_margin">@dimen/list_item_date_left_margin</dimen>
 
+    <dimen name="material_button_conner_radius">24dp</dimen>
+
 </resources>

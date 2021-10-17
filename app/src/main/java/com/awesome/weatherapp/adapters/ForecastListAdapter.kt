@@ -79,7 +79,7 @@ open class ForecastListAdapter @Inject constructor() :
         val weatherImageId =
             WeatherUtils.getLargeArtResourceIdForWeatherCondition(p.locationWeather.weatherConditionId)
         holder.tvDate.text = dateString
-        holder.tvWeatherDes.text = p.locationWeather.weatherCondition
+        holder.tvWeatherDes.text = WeatherUtils.getStringForWeatherCondition(ctx!!,p.locationWeather.weatherConditionId)
         holder.tvTemparature.text = weatherTemp
         holder.weatherIcon.setImageResource(weatherImageId)
         holder.baseLayout.setOnClickListener {

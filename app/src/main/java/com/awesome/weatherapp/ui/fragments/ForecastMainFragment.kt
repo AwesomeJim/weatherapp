@@ -6,13 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.awesome.weatherapp.R
 import com.awesome.weatherapp.adapters.ForecastListAdapter
 import com.awesome.weatherapp.databinding.FragmentMainForecastBinding
 import com.awesome.weatherapp.models.Coordinates
 import com.awesome.weatherapp.models.WeatherItemModel
 import com.awesome.weatherapp.network.Status
+import com.awesome.weatherapp.utilities.EventObserver
 import com.awesome.weatherapp.utilities.WeatherDateUtils
 import com.awesome.weatherapp.utilities.WeatherUtils
 import dagger.hilt.android.AndroidEntryPoint
@@ -55,31 +58,51 @@ class ForecastMainFragment : Fragment() {
         )
         viewModel.loadWeatherData(coordinates)
         viewModel.loadForecastWeatherData(coordinates)
-        viewModel.apiWeatherDataResponse.observe(viewLifecycleOwner) {
+        viewModel.apiWeatherDataResponse.observe(viewLifecycleOwner, EventObserver {
             when (it.status) {
                 Status.SUCCESS -> {
+                    binding.progressLayout.visibility = View.GONE
+                    binding.failedLayout.visibility = View.GONE
+                    binding.currentWeatherStatusView.visibility = View.VISIBLE
                     it.data?.let { weatherItemModel -> bindWeatherData(weatherItemModel) }
                 }
                 Status.LOADING -> {
-
+                    binding.progressLayout.visibility = View.VISIBLE
+                    binding.recyclerviewForecast.visibility = View.GONE
+                    binding.failedLayout.visibility = View.GONE
+                    binding.currentWeatherStatusView.visibility = View.GONE
                 }
                 Status.ERROR -> {
-
+                    binding.progressLayout.visibility = View.GONE
+                    binding.recyclerviewForecast.visibility = View.GONE
+                    binding.failedLayout.visibility = View.VISIBLE
+                    binding.currentWeatherStatusView.visibility = View.GONE
+                    binding.lottieFailedAnimationView.playAnimation()
                 }
             }
-        }
+        })
         setUpObservers()
+        adaptor.setOnItemClickListener { _, item, _ ->
+            val args = Bundle().apply {
+                putParcelable("weatherItemModel", item as WeatherItemModel)
+            }
+            this.findNavController()
+                .navigate(R.id.action_forecastMainFragment_to_forecastDetailsFragment, args)
+
+        }
 
     }
 
     private fun setUpObservers() {
-        viewModel.apiForecastWeatherDataResponse.observe(viewLifecycleOwner) {
+        viewModel.apiForecastWeatherDataResponse.observe(viewLifecycleOwner, EventObserver {
             when (it.status) {
                 Status.SUCCESS -> {
                     it.data?.let { weatherItems ->
                         adaptor.setForecastListItemst(requireContext(), weatherItems)
                         adaptor.notifyDataSetChanged()
                     }
+                    binding.recyclerviewForecast.visibility = View.VISIBLE
+                    binding.recyclerviewForecast.setBackgroundColor(resources.getColor(R.color.grey_rainy))
                 }
                 Status.LOADING -> {
 
@@ -88,7 +111,7 @@ class ForecastMainFragment : Fragment() {
 
                 }
             }
-        }
+        })
     }
 
     private fun bindWeatherData(weatherItemModel: WeatherItemModel) {
@@ -113,7 +136,10 @@ class ForecastMainFragment : Fragment() {
                     )
                 date.text = dateString
                 tvMainTemperature.text = weatherTemp
-                tvWeatherDescription.text = it.locationWeather.weatherCondition
+                tvWeatherDescription.text = WeatherUtils.getStringForWeatherCondition(
+                    requireContext(),
+                    it.locationWeather.weatherConditionId
+                )
                 tvTempMini.text = weatherTempMin
                 tvTempCurrent.text = weatherTemp
                 tvTempHigh.text = weatherTempMax

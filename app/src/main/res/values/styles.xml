@@ -45,5 +45,24 @@
     </style>
 
 
+    <style name="MaterialButtonDefaultStyle" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/colorAccent</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">58dp</item>
+        <item name="rippleColor">@color/colorAccent</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_marginStart">32dp</item>
+        <item name="android:layout_marginEnd">32dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_gravity">center_horizontal|center_vertical</item>
+        <item name="android:textAppearanceButton">@style/AppTextAppearance.Button</item>
+        <item name="android:textStyle">bold</item>
+        <item name="cornerRadius">@dimen/material_button_conner_radius</item>
+    </style>
+    <style name="AppTextAppearance.Button" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:textAllCaps">true</item>
+    </style>
 
 </resources>
