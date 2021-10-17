@@ -10,6 +10,7 @@ import com.awesome.weatherapp.models.WeatherItemModel
 import com.awesome.weatherapp.network.ApiResponse
 import com.awesome.weatherapp.network.Constants.OWM_MESSAGE_CODE
 import com.awesome.weatherapp.repository.MainRepository
+import com.awesome.weatherapp.utilities.ForecastListJsonUtils
 import com.awesome.weatherapp.utilities.OpenWeatherJsonUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -76,6 +77,56 @@ class ForecastMainViewModel @Inject constructor(
             } else {// Load Local Repository is it exist
 
             }
+        }
+    }
+
+    private var _apiForecastWeatherDataResponse = MutableLiveData<ApiResponse<List<WeatherItemModel>>>()
+    val apiForecastWeatherDataResponse: LiveData<ApiResponse<List<WeatherItemModel>>>
+        get() = _apiForecastWeatherDataResponse
+
+    fun loadForecastWeatherData(coordinates: Coordinates) {
+        _apiWeatherDataResponse.value = ApiResponse.loading(null)
+        viewModelScope.launch {
+                val data = repository.fetchWeatherWeatherForecast(coordinates)
+                when (data.isSuccessful) {
+                    true -> {
+                        with(data.body().orEmpty()) {
+                            Timber.e(this)
+                            val forecastJson = JSONObject(this)
+                            if (forecastJson.has(OWM_MESSAGE_CODE)) {
+                                when (forecastJson.getInt(OWM_MESSAGE_CODE)) {
+                                    HttpURLConnection.HTTP_OK -> {//location exist
+                                        val weatherItemModel =
+                                            ForecastListJsonUtils.getWeatherContentValuesFromJson(
+                                                forecastJson
+                                            )
+                                        _apiForecastWeatherDataResponse.value =
+                                            ApiResponse.success(weatherItemModel)
+                                    }
+                                    HttpURLConnection.HTTP_NOT_FOUND -> {/* Location invalid */
+                                        _apiForecastWeatherDataResponse.value = ApiResponse.error(
+                                            "Location invalid",
+                                            null
+                                        )
+                                    }
+                                    else -> { /* Server probably down */
+                                        _apiForecastWeatherDataResponse.value = ApiResponse.error(
+                                            "Server Error",
+                                            null
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else -> {/* Server probably down */
+                        Timber.e(data.message())
+                        _apiForecastWeatherDataResponse.value = ApiResponse.error(
+                            "Server Error",
+                            null
+                        )
+                    }
+                }
         }
     }
 }

@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.awesome.weatherapp.adapters.ForecastListAdapter
 import com.awesome.weatherapp.databinding.FragmentMainForecastBinding
 import com.awesome.weatherapp.models.Coordinates
 import com.awesome.weatherapp.models.WeatherItemModel
@@ -13,6 +16,7 @@ import com.awesome.weatherapp.network.Status
 import com.awesome.weatherapp.utilities.WeatherDateUtils
 import com.awesome.weatherapp.utilities.WeatherUtils
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ForecastMainFragment : Fragment() {
@@ -20,6 +24,9 @@ class ForecastMainFragment : Fragment() {
     internal var view: View? = null
     private var _binding: FragmentMainForecastBinding? = null
     private val binding get() = _binding!!
+
+    @Inject
+    lateinit var adaptor: ForecastListAdapter
 
     private val viewModel: ForecastMainViewModel by viewModels()
 
@@ -34,11 +41,20 @@ class ForecastMainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //  val url = "${BuildConfig.OPEN_WEATHER_APP_ID}&units=metric&lat=-1.28337&lon=36.8167"
+        binding.recyclerviewForecast.adapter = adaptor
+        binding.recyclerviewForecast.layoutManager =
+            LinearLayoutManager(binding.recyclerviewForecast.context)
+        binding.recyclerviewForecast.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                LinearLayoutManager.VERTICAL
+            )
+        )
         val coordinates = Coordinates(
             36.8167, -1.28337
         )
         viewModel.loadWeatherData(coordinates)
+        viewModel.loadForecastWeatherData(coordinates)
         viewModel.apiWeatherDataResponse.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
@@ -52,7 +68,27 @@ class ForecastMainFragment : Fragment() {
                 }
             }
         }
+        setUpObservers()
 
+    }
+
+    private fun setUpObservers() {
+        viewModel.apiForecastWeatherDataResponse.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    it.data?.let { weatherItems ->
+                        adaptor.setForecastListItemst(requireContext(), weatherItems)
+                        adaptor.notifyDataSetChanged()
+                    }
+                }
+                Status.LOADING -> {
+
+                }
+                Status.ERROR -> {
+
+                }
+            }
+        }
     }
 
     private fun bindWeatherData(weatherItemModel: WeatherItemModel) {
@@ -73,7 +109,7 @@ class ForecastMainFragment : Fragment() {
                 val dateString: String =
                     WeatherDateUtils.getFriendlyDateString(
                         requireContext(), it.locationDate,
-                        false
+                        true
                     )
                 date.text = dateString
                 tvMainTemperature.text = weatherTemp

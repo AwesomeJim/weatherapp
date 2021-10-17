@@ -11,6 +11,7 @@ data class WeatherItemModel(
     val locationDate: Long,
     val locationCoordinates: Coordinates,
     val locationWeather: WeatherStatus,
+    val locationWeatherDay: Int
 ) : Parcelable
 
 

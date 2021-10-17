@@ -23,6 +23,7 @@ import com.awesome.weatherapp.network.Constants.OWM_WIND_DIRECTION
 import com.awesome.weatherapp.utilities.WeatherDateUtils.normalizedUtcDateForToday
 import org.json.JSONException
 import org.json.JSONObject
+import java.util.*
 
 /**
  * Utility functions to handle OpenWeatherMap JSON data.
@@ -114,6 +115,11 @@ object OpenWeatherJsonUtils {
          * Description is in a child array called "weather", which is 1 element long.
          * That element also contains a weather code.
          */
+        val timeInMilliSeconds = forecastJson.getLong("dt")
+        // var date = LocalDate.parse("2018-12-31")
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = timeInMilliSeconds
+        val locationWeatherDay =calendar[Calendar.DAY_OF_WEEK]
         val weatherForecast = forecastJson.getJSONArray(OWM_WEATHER).getJSONObject(0)
         val weatherConditionId = weatherForecast.getInt(OWM_WEATHER_ID)
         val weatherCondition = weatherForecast.getString(OWM_MAIN)
@@ -147,7 +153,8 @@ object OpenWeatherJsonUtils {
             locationId,
             dateTimeMillis,
             coordinates,
-            weatherStatus
+            weatherStatus,
+            locationWeatherDay
         )
     }
 }
