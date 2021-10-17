@@ -31,7 +31,6 @@ class WeatherApp : Application() {
                     activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
                 }
             }
-
             override fun onActivityStarted(activity: Activity) {}
             override fun onActivityResumed(activity: Activity) {}
             override fun onActivityPaused(activity: Activity) {}

@@ -37,12 +37,13 @@ object WeatherUtils {
      * "21°"
      */
     fun formatTemperature(context: Context, temperature: Double): String {
-//        if (!SunshinePreferences.isMetric(context)) {
+//        if (!DVTPreferences.isMetric(context)) {
 //            temperature = celsiusToFahrenheit(temperature);
 //        }
         val temperatureFormatResourceId = R.string.format_temperature
 
-        /* For presentation, assume the user doesn't care about tenths of a degree. */return String.format(
+        /* For presentation, assume the user doesn't care about tenths of a degree. */
+        return String.format(
             context.getString(temperatureFormatResourceId),
             temperature
         )
@@ -131,8 +132,7 @@ object WeatherUtils {
      * @return String for the weather condition, null if no relation is found.
      */
     fun getStringForWeatherCondition(context: Context, weatherId: Int): String {
-        val stringId: Int
-        stringId = when (weatherId) {
+        val stringId: Int = when (weatherId) {
             in 200..232 -> {
                 R.string.condition_2xx
             }

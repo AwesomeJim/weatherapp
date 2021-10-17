@@ -29,7 +29,6 @@ class ForecastMainViewModel @Inject constructor(
     val apiWeatherDataResponse: LiveData<ApiResponse<WeatherItemModel>>
         get() = _apiWeatherDataResponse
 
-
     fun loadWeatherData(coordinates: Coordinates) {
         _apiWeatherDataResponse.value = ApiResponse.loading(null)
         viewModelScope.launch {

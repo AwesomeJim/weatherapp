@@ -4,6 +4,22 @@ import com.awesome.weatherapp.models.Coordinates
 import com.awesome.weatherapp.models.WeatherItemModel
 import com.awesome.weatherapp.models.WeatherStatus
 import com.awesome.weatherapp.models.Wind
+import com.awesome.weatherapp.network.Constants.OWM_CITY_ID
+import com.awesome.weatherapp.network.Constants.OWM_CITY_NAME
+import com.awesome.weatherapp.network.Constants.OWM_COORD
+import com.awesome.weatherapp.network.Constants.OWM_HUMIDITY
+import com.awesome.weatherapp.network.Constants.OWM_LATITUDE
+import com.awesome.weatherapp.network.Constants.OWM_LONGITUDE
+import com.awesome.weatherapp.network.Constants.OWM_MAIN
+import com.awesome.weatherapp.network.Constants.OWM_MAX
+import com.awesome.weatherapp.network.Constants.OWM_MIN
+import com.awesome.weatherapp.network.Constants.OWM_PRESSURE
+import com.awesome.weatherapp.network.Constants.OWM_TEMPERATURE
+import com.awesome.weatherapp.network.Constants.OWM_WEATHER
+import com.awesome.weatherapp.network.Constants.OWM_WEATHER_ID
+import com.awesome.weatherapp.network.Constants.OWM_WIND
+import com.awesome.weatherapp.network.Constants.OWM_WINDSPEED
+import com.awesome.weatherapp.network.Constants.OWM_WIND_DIRECTION
 import com.awesome.weatherapp.utilities.WeatherDateUtils.normalizedUtcDateForToday
 import org.json.JSONException
 import org.json.JSONObject
@@ -59,33 +75,7 @@ object OpenWeatherJsonUtils {
      * name City name
      * cod Internal parameter
      */
-    /* Location information */
-    private const val OWM_CITY_NAME = "name"
-    private const val OWM_CITY_ID = "id"
-    private const val OWM_CITY = "city"
 
-    /* Location coordinate */
-    private const val OWM_COORD = "coord"
-    private const val OWM_LATITUDE = "lat"
-    private const val OWM_LONGITUDE = "lon"
-
-    /* Location wind */
-    private const val OWM_WIND = "wind"
-    private const val OWM_MAIN = "main"
-    private const val OWM_PRESSURE = "pressure"
-    private const val OWM_HUMIDITY = "humidity"
-    private const val OWM_WINDSPEED = "speed"
-    private const val OWM_WIND_DIRECTION = "deg"
-
-    /* All temperatures are children of the "temp" object */
-    private const val OWM_TEMPERATURE = "temp"
-
-    /* Max temperature for the day */
-    private const val OWM_MAX = "temp_max"
-    private const val OWM_MIN = "temp_min"
-    private const val OWM_WEATHER = "weather"
-    private const val OWM_WEATHER_ID = "id"
-    private const val OWM_MESSAGE_CODE = "cod"
 
     /**
      * This method parses JSON from a web response and returns an array of Strings
