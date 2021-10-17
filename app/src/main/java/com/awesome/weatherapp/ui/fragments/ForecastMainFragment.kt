@@ -55,24 +55,34 @@ class ForecastMainFragment : Fragment() {
 
     }
 
-
     private fun bindWeatherData(weatherItemModel: WeatherItemModel) {
         with(binding) {
-            val dateString: String =
-                WeatherDateUtils.getFriendlyDateString(
+            weatherItemModel.also {
+                val weatherTempMin: String = WeatherUtils.formatTemperature(
                     requireContext(),
-                    weatherItemModel.locationDate,
-                    false
+                    it.locationWeather.weatherTempMin
                 )
-            date.text = dateString
-            val weatherTempMin: String = WeatherUtils.formatTemperature(requireContext(), weatherItemModel.locationWeather.weatherTempMin)
-            val weatherTemp: String = WeatherUtils.formatTemperature(requireContext(), weatherItemModel.locationWeather.weatherTemp)
-            val weatherTempMax: String = WeatherUtils.formatTemperature(requireContext(), weatherItemModel.locationWeather.weatherTempMax)
-            tvMainTemperature.text = weatherTempMin
-            tvWeatherDescription.text = weatherItemModel.locationWeather.weatherConditionDescription
-            tvTempMini.text = weatherTempMin
-            tvTempCurrent.text = weatherTemp
-            tvTempHigh.text = weatherTempMax
+                val weatherTemp: String = WeatherUtils.formatTemperature(
+                    requireContext(),
+                    it.locationWeather.weatherTemp
+                )
+                val weatherTempMax: String = WeatherUtils.formatTemperature(
+                    requireContext(),
+                    it.locationWeather.weatherTempMax
+                )
+                val dateString: String =
+                    WeatherDateUtils.getFriendlyDateString(
+                        requireContext(), it.locationDate,
+                        false
+                    )
+                date.text = dateString
+                tvMainTemperature.text = weatherTemp
+                tvWeatherDescription.text = it.locationWeather.weatherCondition
+                tvTempMini.text = weatherTempMin
+                tvTempCurrent.text = weatherTemp
+                tvTempHigh.text = weatherTempMax
+            }
+
         }
     }
 

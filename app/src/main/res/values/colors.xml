@@ -16,4 +16,10 @@
 
     <!-- the activated state color for a forecast list item -->
     <color name="activated">#E0E0E0</color>
+
+    <!-- the activated state color for a forecast list item -->
+    <color name="greenish_sunny">#47AB2F</color>
+    <color name="grey_cloudy">#54717A</color>
+    <color name="grey_rainy">#57575D</color>
+
 </resources>

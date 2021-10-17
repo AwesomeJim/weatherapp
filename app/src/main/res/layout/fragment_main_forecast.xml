@@ -15,7 +15,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:layout_alignParentTop="true"
             android:background="@drawable/forest_sunny"
             android:paddingTop="@dimen/today_forecast_list_item_vertical_padding"
             android:paddingBottom="@dimen/today_forecast_list_item_vertical_padding">
@@ -74,11 +73,10 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorAccent"
+            android:background="@color/greenish_sunny"
             android:paddingLeft="@dimen/list_item_padding_horizontal"
-            android:paddingTop="@dimen/list_item_padding_vertical"
             android:paddingRight="@dimen/list_item_padding_horizontal"
-            android:paddingBottom="@dimen/list_item_padding_vertical">
+            android:paddingBottom="2dp">
 
             <TextView
                 android:id="@+id/tvTempMini"
@@ -95,8 +93,9 @@
 
             <TextView
                 android:id="@+id/mini"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:text="mini"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/white"
@@ -122,6 +121,7 @@
                 android:id="@+id/current"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
                 android:text="Current"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/white"
@@ -152,7 +152,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="@+id/tvTempHigh"
-                app:layout_constraintLeft_toLeftOf="@+id/tvTempHigh"
+                app:layout_constraintStart_toStartOf="@+id/tvTempHigh"
                 app:layout_constraintTop_toBottomOf="@+id/tvTempHigh" />
 
 
@@ -171,6 +171,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/currentWeatherStatusView"
+        android:layout_marginTop="1dp"
+        android:background="@color/greenish_sunny"
         android:clipToPadding="false"
         android:paddingBottom="8dp" />
 
