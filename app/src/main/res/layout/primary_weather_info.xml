@@ -117,5 +117,7 @@
             app:layout_constraintRight_toRightOf="@+id/high_temperature"
             tools:text="10\u00b0"/>
 
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

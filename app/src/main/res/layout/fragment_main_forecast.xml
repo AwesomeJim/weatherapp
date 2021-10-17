@@ -1,14 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragments.ForecastMainFragment">
 
+    <LinearLayout
+        android:id="@+id/currentWeatherStatusView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/forest_sunny"
+            android:paddingTop="@dimen/today_forecast_list_item_vertical_padding"
+            android:paddingBottom="@dimen/today_forecast_list_item_vertical_padding">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/horizontal_middle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5"
+                tools:layout_editor_absoluteX="192dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="sans-serif"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Today, April 03" />
+
+            <TextView
+                android:id="@+id/tvWeatherDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="@+id/tvMainTemperature"
+                app:layout_constraintStart_toStartOf="@+id/tvMainTemperature"
+                app:layout_constraintTop_toBottomOf="@+id/tvMainTemperature"
+                tools:text="Rainy" />
+
+            <TextView
+                android:id="@+id/tvMainTemperature"
+                android:layout_width="107dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:textColor="@color/white"
+                android:textSize="72sp"
+                app:layout_constraintEnd_toStartOf="@+id/horizontal_middle"
+                app:layout_constraintHorizontal_bias="0.45"
+                app:layout_constraintLeft_toLeftOf="@+id/horizontal_middle"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/horizontal_middle"
+                app:layout_constraintTop_toBottomOf="@+id/date"
+                tools:text="19\u00b0" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:paddingLeft="@dimen/list_item_padding_horizontal"
+            android:paddingTop="@dimen/list_item_padding_vertical"
+            android:paddingRight="@dimen/list_item_padding_horizontal"
+            android:paddingBottom="@dimen/list_item_padding_vertical">
+
+            <TextView
+                android:id="@+id/tvTempMini"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="sans-serif-light"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/white"
+                android:textSize="@dimen/forecast_text_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="19\u00b0" />
+
+            <TextView
+                android:id="@+id/mini"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="mini"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="@+id/tvTempMini"
+                app:layout_constraintLeft_toLeftOf="@+id/tvTempMini"
+                app:layout_constraintTop_toBottomOf="@+id/tvTempMini" />
+
+            <TextView
+                android:id="@+id/tvTempCurrent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="sans-serif-light"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/white"
+                android:textSize="@dimen/forecast_text_size"
+                app:layout_constraintEnd_toStartOf="@+id/verticleGuideline"
+                app:layout_constraintStart_toStartOf="@+id/verticleGuideline"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="25\u00b0" />
+
+            <TextView
+                android:id="@+id/current"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Current"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="@+id/tvTempCurrent"
+                app:layout_constraintLeft_toLeftOf="@+id/tvTempCurrent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTempCurrent" />
+
+
+            <TextView
+                android:id="@+id/tvTempHigh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="sans-serif-light"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/white"
+                android:textSize="@dimen/forecast_text_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="27\u00b0" />
+
+            <TextView
+                android:id="@+id/high"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="High"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="@+id/tvTempHigh"
+                app:layout_constraintLeft_toLeftOf="@+id/tvTempHigh"
+                app:layout_constraintTop_toBottomOf="@+id/tvTempHigh" />
+
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/verticleGuideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_forecast"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/currentWeatherStatusView"
         android:clipToPadding="false"
         android:paddingBottom="8dp" />
 
@@ -21,4 +183,4 @@
         android:layout_gravity="center"
         android:visibility="invisible" />
 
-</FrameLayout>
+</RelativeLayout>
