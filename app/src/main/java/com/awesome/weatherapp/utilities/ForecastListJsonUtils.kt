@@ -145,7 +145,7 @@ object ForecastListJsonUtils {
             calendar.timeInMillis = timeInMilliSeconds * 1000
             dateTimeMillis = timeInMilliSeconds * 1000
             val locationWeatherDay = calendar[Calendar.DAY_OF_MONTH]
-            Timber.e("<<<<<<<<<locationWeatherDay>>>>>>>>>>: %s", locationWeatherDay)
+            Timber.e("<<<<<<<locationWeatherDay>>>>>>>>>>: %s", locationWeatherDay)
             //Preferences.setLocationDetails(context, cityLatitude, cityLongitude);
             /*
          * Description is in a child array called "weather", which is 1 element long.

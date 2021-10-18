@@ -1,9 +1,11 @@
 package com.awesome.weatherapp.ui.fragments
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.awesome.weatherapp.R
 import com.awesome.weatherapp.di.network.NetworkHelper
 import com.awesome.weatherapp.models.Coordinates
 import com.awesome.weatherapp.models.WeatherItemModel
@@ -24,7 +26,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ForecastMainViewModel @Inject constructor(
     private val networkHelper: NetworkHelper,
-    private val repository: MainRepository
+    private val repository: MainRepository,
+    private val application: Application
 ) : ViewModel() {
 
     private var _apiWeatherDataResponse = MutableLiveData<Event<ApiResponse<WeatherItemModel>>>()
@@ -82,7 +85,12 @@ class ForecastMainViewModel @Inject constructor(
                     }
                 }
             } else {// Load Local Repository is it exist
-
+                _apiWeatherDataResponse.value = Event(
+                    ApiResponse.error(
+                        application.applicationContext.resources.getString(R.string.internetErr),
+                        null
+                    )
+                )
             }
         }
     }
@@ -93,52 +101,54 @@ class ForecastMainViewModel @Inject constructor(
         get() = _apiForecastWeatherDataResponse
 
     fun loadForecastWeatherData(coordinates: Coordinates) {
-        _apiWeatherDataResponse.value = Event(ApiResponse.loading(null))
+        _apiForecastWeatherDataResponse.value = Event(ApiResponse.loading(null))
         viewModelScope.launch {
-            val data = repository.fetchWeatherWeatherForecast(coordinates)
-            when (data.isSuccessful) {
-                true -> {
-                    with(data.body().orEmpty()) {
-                        Timber.e(this)
-                        val forecastJson = JSONObject(this)
-                        if (forecastJson.has(OWM_MESSAGE_CODE)) {
-                            when (forecastJson.getInt(OWM_MESSAGE_CODE)) {
-                                HttpURLConnection.HTTP_OK -> {//location exist
-                                    val weatherItemModel =
-                                        ForecastListJsonUtils.getWeatherContentValuesFromJson(
-                                            forecastJson
+            if (networkHelper.isNetworkConnected()) {
+                val data = repository.fetchWeatherWeatherForecast(coordinates)
+                when (data.isSuccessful) {
+                    true -> {
+                        with(data.body().orEmpty()) {
+                            Timber.e(this)
+                            val forecastJson = JSONObject(this)
+                            if (forecastJson.has(OWM_MESSAGE_CODE)) {
+                                when (forecastJson.getInt(OWM_MESSAGE_CODE)) {
+                                    HttpURLConnection.HTTP_OK -> {//location exist
+                                        val weatherItemModel =
+                                            ForecastListJsonUtils.getWeatherContentValuesFromJson(
+                                                forecastJson
+                                            )
+                                        _apiForecastWeatherDataResponse.value =
+                                            Event(ApiResponse.success(weatherItemModel))
+                                    }
+                                    HttpURLConnection.HTTP_NOT_FOUND -> {/* Location invalid */
+                                        _apiForecastWeatherDataResponse.value = Event(
+                                            ApiResponse.error(
+                                                "Location invalid",
+                                                null
+                                            )
                                         )
-                                    _apiForecastWeatherDataResponse.value =
-                                        Event(ApiResponse.success(weatherItemModel))
-                                }
-                                HttpURLConnection.HTTP_NOT_FOUND -> {/* Location invalid */
-                                    _apiForecastWeatherDataResponse.value = Event(
-                                        ApiResponse.error(
-                                            "Location invalid",
-                                            null
+                                    }
+                                    else -> { /* Server probably down */
+                                        _apiForecastWeatherDataResponse.value = Event(
+                                            ApiResponse.error(
+                                                "Server Error",
+                                                null
+                                            )
                                         )
-                                    )
-                                }
-                                else -> { /* Server probably down */
-                                    _apiForecastWeatherDataResponse.value = Event(
-                                        ApiResponse.error(
-                                            "Server Error",
-                                            null
-                                        )
-                                    )
+                                    }
                                 }
                             }
                         }
                     }
-                }
-                else -> {/* Server probably down */
-                    Timber.e(data.message())
-                    _apiForecastWeatherDataResponse.value = Event(
-                        ApiResponse.error(
-                            "Server Error",
-                            null
+                    else -> {/* Server probably down */
+                        Timber.e(data.message())
+                        _apiForecastWeatherDataResponse.value = Event(
+                            ApiResponse.error(
+                                "Server Error",
+                                null
+                            )
                         )
-                    )
+                    }
                 }
             }
         }

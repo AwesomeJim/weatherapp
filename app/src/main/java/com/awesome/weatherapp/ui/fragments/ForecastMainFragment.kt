@@ -80,7 +80,9 @@ class ForecastMainFragment : Fragment() {
             }
             this.findNavController()
                 .navigate(R.id.action_forecastMainFragment_to_forecastDetailsFragment, args)
-
+        }
+        binding.btnFailedOk.setOnClickListener {
+            getCurrentLocationAndFetchWeather()
         }
     }
 
@@ -104,6 +106,7 @@ class ForecastMainFragment : Fragment() {
                     binding.recyclerviewForecast.visibility = View.GONE
                     binding.failedLayout.visibility = View.VISIBLE
                     binding.currentWeatherStatusView.visibility = View.GONE
+                    binding.tvFailedMsg.text = it.message
                     binding.lottieFailedAnimationView.playAnimation()
                 }
             }

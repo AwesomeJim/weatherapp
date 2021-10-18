@@ -23,6 +23,7 @@ import com.awesome.weatherapp.network.Constants.OWM_WIND_DIRECTION
 import com.awesome.weatherapp.utilities.WeatherDateUtils.normalizedUtcDateForToday
 import org.json.JSONException
 import org.json.JSONObject
+import timber.log.Timber
 import java.util.*
 
 /**
@@ -135,6 +136,8 @@ object OpenWeatherJsonUtils {
         val weatherTempMax =  mainForecast.getDouble(OWM_MAX)
         val weatherPressure = mainForecast.getDouble(OWM_PRESSURE)
         val weatherHumidity = mainForecast.getInt(OWM_HUMIDITY)
+        Timber.e("<<<<<<<<<weatherTempMax>>>>>>>>>>: %s", weatherTempMax)
+        Timber.e("<<<<<<<<<weatherTempMin>>>>>>>>>>: %s", weatherTempMin)
         //Wind Details
         val windForecast = forecastJson.getJSONObject(OWM_WIND)
         val windSpeed = windForecast.getDouble(OWM_WINDSPEED)
