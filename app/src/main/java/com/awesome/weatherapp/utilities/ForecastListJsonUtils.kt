@@ -117,8 +117,10 @@ object ForecastListJsonUtils {
         var dateTimeMillis: Long
         /*City details*/
         val city = forecastJson.getJSONObject(OWM_CITY)
-        val locationName = city.getString(OWM_CITY_NAME)
+        var locationName = city.getString(OWM_CITY_NAME)
         val locationId = city.getInt(OWM_CITY_ID)
+        val country = city.getString("country")
+        locationName = "$locationName -$country"
 
         /*City Coord*/
         val cityCoord = city.getJSONObject(OWM_COORD)

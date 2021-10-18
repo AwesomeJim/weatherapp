@@ -101,7 +101,7 @@ object OpenWeatherJsonUtils {
          * the values are returned in-order by day (which is not guaranteed to be correct).
          */
         val dateTimeMillis = normalizedUtcStartDay + WeatherDateUtils.DAY_IN_MILLIS*0
-        val locationName = forecastJson.getString(OWM_CITY_NAME)
+        var locationName = forecastJson.getString(OWM_CITY_NAME)
         val locationId = forecastJson.getInt(OWM_CITY_ID)
         val cityCoord = forecastJson.getJSONObject(OWM_COORD)
         val cityLatitude = cityCoord.getDouble(OWM_LATITUDE)
@@ -125,6 +125,9 @@ object OpenWeatherJsonUtils {
         val weatherCondition = weatherForecast.getString(OWM_MAIN)
         val weatherConditionDescription = weatherForecast.getString("description")
 
+        val sys = forecastJson.getJSONObject("sys")
+        val country = sys.getString("country")
+        locationName = "$locationName -$country"
         /* Get the JSON object representing the day */
         val mainForecast = forecastJson.getJSONObject(OWM_MAIN)
         val weatherTemp = mainForecast.getDouble(OWM_TEMPERATURE)

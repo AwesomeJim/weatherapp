@@ -82,7 +82,7 @@ open class ForecastListAdapter @Inject constructor() :
         holder.tvWeatherDes.text = WeatherUtils.getStringForWeatherCondition(ctx!!,p.locationWeather.weatherConditionId)
         holder.tvTemparature.text = weatherTemp
         holder.weatherIcon.setImageResource(weatherImageId)
-        holder.baseLayout.setOnClickListener {
+        holder.itemView.setOnClickListener {
             mOnItemClickListener?.invoke(it, p, position)
         }
         setAnimation(holder.itemView, position)

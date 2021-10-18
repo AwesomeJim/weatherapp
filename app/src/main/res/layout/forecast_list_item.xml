@@ -12,7 +12,6 @@
     android:paddingRight="@dimen/list_item_padding_horizontal"
     android:clickable="true"
     android:focusable="true"
-    android:focusableInTouchMode="true"
     android:paddingBottom="@dimen/list_item_padding_vertical">
 
     <ImageView

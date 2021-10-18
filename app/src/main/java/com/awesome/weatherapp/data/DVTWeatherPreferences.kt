@@ -2,7 +2,8 @@
 package com.awesome.weatherapp.data
 
 import android.content.Context
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
+
 import com.awesome.weatherapp.R
 
 object DVTWeatherPreferences {
@@ -81,14 +82,7 @@ object DVTWeatherPreferences {
         return userPrefersMetric
     }
 
-    /**
-     * Returns the location coordinates associated with the location. Note that there is a
-     * possibility that these coordinates may not be set, which results in (0,0) being returned.
-     * Interestingly, (0,0) is in the middle of the ocean off the west coast of Africa.
-     *
-     * @param context used to access SharedPreferences
-     * @return an array containing the two coordinate values for the user's preferred location
-     */
+
     fun getLocationCoordinates(context: Context?): DoubleArray {
         val sp = PreferenceManager.getDefaultSharedPreferences(context)
         val preferredCoordinates = DoubleArray(2)
@@ -101,7 +95,8 @@ object DVTWeatherPreferences {
          *
          * Double.longBitsToDouble does the opposite, converting a long (that represents a double)
          * into the double itself.
-         */preferredCoordinates[0] = java.lang.Double
+         */
+        preferredCoordinates[0] = java.lang.Double
             .longBitsToDouble(sp.getLong(PREF_COORD_LAT, java.lang.Double.doubleToRawLongBits(0.0)))
         preferredCoordinates[1] = java.lang.Double
             .longBitsToDouble(
@@ -131,28 +126,16 @@ object DVTWeatherPreferences {
         return spContainBothLatitudeAndLongitude
     }
 
-    /**
-     * Returns true if the user prefers to see notifications from Sunshine, false otherwise. This
-     * preference can be changed by the user within the SettingsFragment.
-     *
-     * @param context Used to access SharedPreferences
-     * @return true if the user prefers to see notifications, false otherwise
-     */
+
     fun areNotificationsEnabled(context: Context): Boolean {
         /* Key for accessing the preference for showing notifications */
         val displayNotificationsKey =
             context.getString(R.string.pref_enable_notifications_key)
 
-        /*
-         * In Sunshine, the user has the ability to say whether she would like notifications
-         * enabled or not. If no preference has been chosen, we want to be able to determine
-         * whether or not to show them. To do this, we reference a bool stored in bools.xml.
-         */
         val shouldDisplayNotificationsByDefault = context
             .resources
             .getBoolean(R.bool.show_notifications_by_default)
 
-        /* As usual, we use the default SharedPreferences to access the user's preferences */
         val sp =
             PreferenceManager.getDefaultSharedPreferences(context)
 
@@ -168,7 +151,6 @@ object DVTWeatherPreferences {
      * @return UNIX time of when the last notification was shown
      */
     fun getLastNotificationTimeInMillis(context: Context): Long {
-        /* Key for accessing the time at which Sunshine last displayed a notification */
         val lastNotificationKey =
             context.getString(R.string.pref_last_notification)
 
@@ -176,16 +158,6 @@ object DVTWeatherPreferences {
         val sp =
             PreferenceManager.getDefaultSharedPreferences(context)
 
-        /*
-         * Here, we retrieve the time in milliseconds when the last notification was shown. If
-         * SharedPreferences doesn't have a value for lastNotificationKey, we return 0. The reason
-         * we return 0 is because we compare the value returned from this method to the current
-         * system time. If the difference between the last notification time and the current time
-         * is greater than one day, we will show a notification again. When we compare the two
-         * values, we subtract the last notification time from the current system time. If the
-         * time of the last notification was 0, the difference will always be greater than the
-         * number of milliseconds in a day and we will show another notification.
-         */
         return sp.getLong(lastNotificationKey, 0)
     }
 

@@ -3,6 +3,7 @@ package com.awesome.weatherapp.utilities
 
 import android.content.Context
 import com.awesome.weatherapp.R
+import com.awesome.weatherapp.data.DVTWeatherPreferences
 import timber.log.Timber
 
 /**
@@ -37,15 +38,16 @@ object WeatherUtils {
      * "21°"
      */
     fun formatTemperature(context: Context, temperature: Double): String {
-//        if (!DVTPreferences.isMetric(context)) {
-//            temperature = celsiusToFahrenheit(temperature);
-//        }
+        var temp =temperature
+        if (!DVTWeatherPreferences.isMetric(context)) {
+            temp = celsiusToFahrenheit(temperature);
+        }
         val temperatureFormatResourceId = R.string.format_temperature
 
         /* For presentation, assume the user doesn't care about tenths of a degree. */
         return String.format(
             context.getString(temperatureFormatResourceId),
-            temperature
+            temp
         )
     }
 
@@ -87,10 +89,6 @@ object WeatherUtils {
     fun getFormattedWind(context: Context, windSpeed: Float, degrees: Float): String {
         val windFormat = R.string.format_wind_kmh
 
-        /*
-         * You know what's fun? Writing really long if/else statements with tons of possible
-         * conditions. Seriously, try it!
-         */
         var direction = "Unknown"
         when {
             degrees >= 337.5 || degrees < 22.5 -> {
