@@ -1,5 +1,6 @@
 package com.awesome.weatherapp.utilities
 
+import android.text.format.DateUtils
 import com.awesome.weatherapp.models.Coordinates
 import com.awesome.weatherapp.models.WeatherItemModel
 import com.awesome.weatherapp.models.WeatherStatus
@@ -25,6 +26,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
+
 
 /**
  * Utility functions to handle OpenWeatherMap JSON data.
@@ -101,7 +103,7 @@ object OpenWeatherJsonUtils {
          * We ignore all the datetime values embedded in the JSON and assume that
          * the values are returned in-order by day (which is not guaranteed to be correct).
          */
-        val dateTimeMillis = normalizedUtcStartDay + WeatherDateUtils.DAY_IN_MILLIS*0
+        var dateTimeMillis = normalizedUtcStartDay + WeatherDateUtils.DAY_IN_MILLIS*0
         var locationName = forecastJson.getString(OWM_CITY_NAME)
         val locationId = forecastJson.getInt(OWM_CITY_ID)
         val cityCoord = forecastJson.getJSONObject(OWM_COORD)
@@ -118,9 +120,14 @@ object OpenWeatherJsonUtils {
          */
         val timeInMilliSeconds = forecastJson.getLong("dt")
         // var date = LocalDate.parse("2018-12-31")
-        val calendar = Calendar.getInstance()
-        calendar.timeInMillis = timeInMilliSeconds
-        val locationWeatherDay =calendar[Calendar.DAY_OF_WEEK]
+        val calendar = Calendar.getInstance(TimeZone.getDefault())
+        calendar.timeInMillis = timeInMilliSeconds*1000
+        val locationWeatherDay =calendar[Calendar.DAY_OF_MONTH]
+        dateTimeMillis= calendar.timeInMillis
+        val relTime = DateUtils.getRelativeTimeSpanString(timeInMilliSeconds * 1000 + TimeZone.getDefault().rawOffset, System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS)
+
+        Timber.e("<<<<<<<=======locationWeatherDay=======>>>>>>>>>>: %s", locationWeatherDay)
+        Timber.e("<<<<<<<=======locationWeatherDay=======>>>>>>>>>>: %s", relTime)
         val weatherForecast = forecastJson.getJSONArray(OWM_WEATHER).getJSONObject(0)
         val weatherConditionId = weatherForecast.getInt(OWM_WEATHER_ID)
         val weatherCondition = weatherForecast.getString(OWM_MAIN)

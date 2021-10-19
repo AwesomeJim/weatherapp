@@ -14,36 +14,8 @@ import java.util.concurrent.TimeUnit
 object WeatherDateUtils {
     /* Milliseconds in a day */
     @JvmField
-    val DAY_IN_MILLIS = TimeUnit.DAYS.toMillis(1)/*
-         * This number represents the number of milliseconds that have elapsed since January
-         * 1st, 1970 at midnight in the GMT time zone.
-         */
+    val DAY_IN_MILLIS = TimeUnit.DAYS.toMillis(1)
 
-    /*
-      * This TimeZone represents the device's current time zone. It provides us with a means
-      * of acquiring the offset for local time from a UTC time stamp.
-      */
-
-    /*
-      * The getOffset method returns the number of milliseconds to add to UTC time to get the
-      * elapsed time since the epoch for our current time zone. We pass the current UTC time
-      * into this method so it can determine changes to account for daylight savings time.
-      */
-
-    /*
-      * UTC time is measured in milliseconds from January 1, 1970 at midnight from the GMT
-      * time zone. Depending on your time zone, the time since January 1, 1970 at midnight (GMT)
-      * will be greater or smaller. This variable represents the number of milliseconds since
-      * January 1, 1970 (GMT) time.
-      */
-
-    /* This method simply converts milliseconds to days, disregarding any fractional days */
-
-    /*
-      * Finally, we convert back to milliseconds. This time stamp represents today's date at
-      * midnight in GMT time. We will need to account for local time zone offsets when
-      * extracting this information from the database.
-      */
     /**
      * This method returns the number of milliseconds (UTC time) for today's date at midnight in
      * the local time zone. For example, if you live in California and the day is September 20th,

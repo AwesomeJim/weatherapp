@@ -1,5 +1,6 @@
 package com.awesome.weatherapp.utilities
 
+
 import com.awesome.weatherapp.models.Coordinates
 import com.awesome.weatherapp.models.WeatherItemModel
 import com.awesome.weatherapp.models.WeatherStatus
@@ -27,6 +28,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -134,19 +136,26 @@ object ForecastListJsonUtils {
         val weatherListItems: MutableList<WeatherItemModel> = ArrayList()
         for (i in 0 until jsonWeatherArray.length()) {
             val dayForecast = jsonWeatherArray.getJSONObject(i)
-          //  dateTimeMillis = normalizedUtcStartDay + WeatherDateUtils.DAY_IN_MILLIS * i
+
             /**
              * open weather forecast returns response for 5 days with data every 3 hours (5*8)
              * I had to have way to get just a single forecast of the  day by using the the calender instance then filtering the list
              * with a distinct day of the , thus even though there are 8 entries for a single day we will have only one
              */
             val timeInMilliSeconds = dayForecast.getLong("dt")
-            val calendar = Calendar.getInstance()
+            val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
             calendar.timeInMillis = timeInMilliSeconds * 1000
-            dateTimeMillis = timeInMilliSeconds * 1000
+
+            val todayDate = Calendar.getInstance(TimeZone.getDefault())
             val locationWeatherDay = calendar[Calendar.DAY_OF_MONTH]
             Timber.e("<<<<<<<locationWeatherDay>>>>>>>>>>: %s", locationWeatherDay)
-            //Preferences.setLocationDetails(context, cityLatitude, cityLongitude);
+
+            val diffInMillisec: Long = calendar.time.time - todayDate.time.time
+
+            val diffInDays: Long = TimeUnit.MILLISECONDS.toDays(diffInMillisec)
+
+            Timber.e("<<<<<<<********diffInDays********>>>>>>>>>>: %s", diffInDays)
+            dateTimeMillis = normalizedUtcStartDay + WeatherDateUtils.DAY_IN_MILLIS * diffInDays
             /*
          * Description is in a child array called "weather", which is 1 element long.
          * That element also contains a weather code.

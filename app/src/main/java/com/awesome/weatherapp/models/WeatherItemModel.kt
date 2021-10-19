@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 data class WeatherItemModel(
     val locationName: String,
     val locationId: Int,
-    val locationDate: Long,
+    var locationDate: Long,
     val locationCoordinates: Coordinates,
     val locationWeather: WeatherStatus,
     val locationWeatherDay: Int

@@ -50,7 +50,7 @@
                 android:fontFamily="sans-serif"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/location"
                 app:layout_constraintEnd_toStartOf="@+id/horizontal_middle"
                 app:layout_constraintStart_toEndOf="@+id/location"
@@ -62,15 +62,15 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:fontFamily="sans-serif"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvCity"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/horizontal_middle"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvCity"
                 tools:text="Today, April 03" />
 
             <TextView
@@ -91,6 +91,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif"
                 android:textColor="@color/white"
+                android:layout_marginTop="8dp"
                 android:textSize="48sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/horizontal_middle"
@@ -98,7 +99,7 @@
                 app:layout_constraintLeft_toLeftOf="@+id/horizontal_middle"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/horizontal_middle"
-                app:layout_constraintTop_toBottomOf="@+id/date"
+                app:layout_constraintTop_toBottomOf="@+id/tvCity"
                 tools:text="19\u00b0" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
