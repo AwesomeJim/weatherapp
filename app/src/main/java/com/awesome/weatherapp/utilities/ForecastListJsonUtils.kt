@@ -28,7 +28,6 @@ import org.json.JSONException
 import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 
 /**
@@ -143,19 +142,12 @@ object ForecastListJsonUtils {
              * with a distinct day of the , thus even though there are 8 entries for a single day we will have only one
              */
             val timeInMilliSeconds = dayForecast.getLong("dt")
-            val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+            val calendar = Calendar.getInstance(TimeZone.getDefault())
             calendar.timeInMillis = timeInMilliSeconds * 1000
-
-            val todayDate = Calendar.getInstance(TimeZone.getDefault())
+             dateTimeMillis = calendar.timeInMillis
             val locationWeatherDay = calendar[Calendar.DAY_OF_MONTH]
             Timber.e("<<<<<<<locationWeatherDay>>>>>>>>>>: %s", locationWeatherDay)
 
-            val diffInMillisec: Long = calendar.time.time - todayDate.time.time
-
-            val diffInDays: Long = TimeUnit.MILLISECONDS.toDays(diffInMillisec)
-
-            Timber.e("<<<<<<<********diffInDays********>>>>>>>>>>: %s", diffInDays)
-            dateTimeMillis = normalizedUtcStartDay + WeatherDateUtils.DAY_IN_MILLIS * diffInDays
             /*
          * Description is in a child array called "weather", which is 1 element long.
          * That element also contains a weather code.

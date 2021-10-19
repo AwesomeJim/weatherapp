@@ -187,10 +187,7 @@ class ForecastMainFragment : Fragment() {
                     )
                 date.text = dateString
                 tvMainTemperature.text = weatherTemp
-                tvWeatherDescription.text = WeatherUtils.getStringForWeatherCondition(
-                    requireContext(),
-                    it.locationWeather.weatherConditionId
-                )
+                tvWeatherDescription.text = it.locationWeather.weatherCondition.capitalize()
                 tvTempMini.text = weatherTempMin
                 tvTempCurrent.text = weatherTemp
                 tvTempHigh.text = weatherTempMax
