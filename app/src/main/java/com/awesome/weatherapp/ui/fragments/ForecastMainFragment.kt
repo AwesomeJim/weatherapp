@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.drawable.ColorDrawable
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
@@ -195,16 +196,22 @@ class ForecastMainFragment : Fragment() {
                         binding.recyclerviewForecast.setBackgroundColor(resources.getColor(R.color.grey_cloudy))
                         binding.moreInfoLayout.setBackgroundColor(resources.getColor(R.color.grey_cloudy))
                         binding.primaryInfoLayout.setBackgroundResource(R.drawable.forest_cloudy)
+                        (activity as AppCompatActivity?)!!.supportActionBar?.setBackgroundDrawable(ColorDrawable(
+                            resources.getColor(R.color.grey_cloudy)))
                     }
                     in 799..800 -> {
                         binding.recyclerviewForecast.setBackgroundColor(resources.getColor(R.color.greenish_sunny))
-                        binding.moreInfoLayout.setBackgroundColor(resources.getColor(R.color.grey_cloudy))
+                        binding.moreInfoLayout.setBackgroundColor(resources.getColor(R.color.greenish_sunny))
                         binding.primaryInfoLayout.setBackgroundResource(R.drawable.forest_sunny)
+                        (activity as AppCompatActivity?)!!.supportActionBar?.setBackgroundDrawable(ColorDrawable(
+                            resources.getColor(R.color.greenish_sunny)))
                     }
                     in 500..531 -> {
                         binding.recyclerviewForecast.setBackgroundColor(resources.getColor(R.color.grey_rainy))
-                        binding.moreInfoLayout.setBackgroundColor(resources.getColor(R.color.grey_cloudy))
+                        binding.moreInfoLayout.setBackgroundColor(resources.getColor(R.color.grey_rainy))
                         binding.primaryInfoLayout.setBackgroundResource(R.drawable.forest_rainy)
+                        (activity as AppCompatActivity?)!!.supportActionBar?.setBackgroundDrawable(ColorDrawable(
+                            resources.getColor(R.color.grey_rainy)))
                     }
                 }
             }
