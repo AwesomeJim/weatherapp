@@ -60,8 +60,6 @@ class ForecastMainFragment : Fragment() {
         setUpView()
 
 
-        getCurrentLocationAndFetchWeather()
-
     }
 
     private fun setUpView() {
@@ -231,12 +229,15 @@ class ForecastMainFragment : Fragment() {
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { resultMap ->
             resultMap.forEach {
                 Timber.e("Permission: " + it.key + ", granted: " + it.value)
+                getCurrentLocationAndFetchWeather()
             }
         }
 
     private fun requestPermissionsIfNecessary() {
         if (!checkAllPermissions()) {
             requestPermissionsLauncher.launch(permissions.toTypedArray())
+        } else {
+            getCurrentLocationAndFetchWeather()
         }
     }
 

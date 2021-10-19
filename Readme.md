@@ -23,11 +23,11 @@ Tech Stack Used:
 
 Screenshots
 ------------
-![Login page](Screenshots/aloginpage.png "Login page" )   ![Home page](Screenshots/homepage.png "Home page" )   ![Edit Journal](Screenshots/editjournal.png "Edit page" )   ![Login page](Screenshots/ajournal.png "a journal" )
+![Home page](Screenshots/Screenshot_20211019_060523.png "Home page" )   ![Forecast Details page](Screenshots/Screenshot_20211019_060732.png "Forecast Details page" )   
 
 # Sample Apk
 
-![Weather Forecast Apk](sampleAPK/app-debug.apk "Weather Forecast Apk")
+![Weather Forecast Apk](sampleAPK/WeatherForecast.1.0.0-dev.apk "Weather Forecast Apk")
 
 License
 --------
