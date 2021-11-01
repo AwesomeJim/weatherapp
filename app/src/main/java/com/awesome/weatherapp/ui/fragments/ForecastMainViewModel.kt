@@ -16,6 +16,7 @@ import com.awesome.weatherapp.utilities.Event
 import com.awesome.weatherapp.utilities.ForecastListJsonUtils
 import com.awesome.weatherapp.utilities.OpenWeatherJsonUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import timber.log.Timber
@@ -38,7 +39,10 @@ class ForecastMainViewModel @Inject constructor(
         _apiWeatherDataResponse.value = Event(ApiResponse.loading(null))
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {// if connected lets load data from the Internet
-                val data = repository.fetchWeatherWithLatitudeLongitude(coordinates)
+                val response = async {
+                    repository.fetchWeatherWithLatitudeLongitude(coordinates)
+                }
+                val data = response.await()
                 when (data.isSuccessful) {
                     true -> {
                         with(data.body().orEmpty()) {
@@ -104,7 +108,8 @@ class ForecastMainViewModel @Inject constructor(
         _apiForecastWeatherDataResponse.value = Event(ApiResponse.loading(null))
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
-                val data = repository.fetchWeatherWeatherForecast(coordinates)
+                val response = async { repository.fetchWeatherWeatherForecast(coordinates) }
+                val data = response.await()
                 when (data.isSuccessful) {
                     true -> {
                         with(data.body().orEmpty()) {
