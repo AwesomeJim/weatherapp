@@ -41,15 +41,13 @@ SharedPreferences.OnSharedPreferenceChangeListener {
     override fun onStop() {
         super.onStop()
         // unregister the preference change listener
-        preferenceScreen.sharedPreferences
-            .unregisterOnSharedPreferenceChangeListener(this)
+        preferenceScreen.sharedPreferences?.unregisterOnSharedPreferenceChangeListener(this)
     }
 
     override fun onStart() {
         super.onStart()
         // register the preference change listener
-        preferenceScreen.sharedPreferences
-            .registerOnSharedPreferenceChangeListener(this)
+        preferenceScreen.sharedPreferences?.registerOnSharedPreferenceChangeListener(this)
     }
 
     private fun setPreferenceSummary(preference: Preference, value: Any) {

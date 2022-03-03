@@ -26,7 +26,7 @@ object DVTWeatherPreferences {
      * @param lat      the latitude of the city
      * @param lon      the longitude of the city
      */
-    fun setLocationDetails(context: Context?, lat: Double, lon: Double) {
+    fun setLocationDetails(context: Context, lat: Double, lon: Double) {
         val sp = PreferenceManager.getDefaultSharedPreferences(context)
         val editor = sp.edit()
         editor.putLong(PREF_COORD_LAT, java.lang.Double.doubleToRawLongBits(lat))
@@ -39,7 +39,7 @@ object DVTWeatherPreferences {
      *
      * @param context Context used to get the SharedPreferences
      */
-    fun resetLocationCoordinates(context: Context?) {
+    fun resetLocationCoordinates(context: Context) {
         val sp = PreferenceManager.getDefaultSharedPreferences(context)
         val editor = sp.edit()
         editor.remove(PREF_COORD_LAT)
@@ -83,7 +83,7 @@ object DVTWeatherPreferences {
     }
 
 
-    fun getLocationCoordinates(context: Context?): DoubleArray {
+    fun getLocationCoordinates(context: Context): DoubleArray {
         val sp = PreferenceManager.getDefaultSharedPreferences(context)
         val preferredCoordinates = DoubleArray(2)
 
@@ -115,7 +115,7 @@ object DVTWeatherPreferences {
      * @param context used to get the SharedPreferences
      * @return true if lat/long are saved in SharedPreferences
      */
-    fun isLocationLatLonAvailable(context: Context?): Boolean {
+    fun isLocationLatLonAvailable(context: Context): Boolean {
         val sp = PreferenceManager.getDefaultSharedPreferences(context)
         val spContainLatitude = sp.contains(PREF_COORD_LAT)
         val spContainLongitude = sp.contains(PREF_COORD_LONG)
